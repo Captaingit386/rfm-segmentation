@@ -1,0 +1,7 @@
+segment,customers,avg_recency_days,avg_frequency,avg_monetary,total_revenue
+New Customers,645,6.41,12.24,6743.98,4349869.51
+Other,1484,43.34,4.94,2333.75,3463283.05
+At-Risk,1548,200.13,1.58,547.65,847764.24
+Loyal / Regular,374,49.86,1.13,428.21,160151.16
+VIP / Champions,280,18.1,1.28,234.38,65625.98
+Lost,7,245.0,11.86,3530.57,24713.96
