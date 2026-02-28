@@ -1,44 +1,80 @@
 # RFM Customer Segmentation (PostgreSQL + Python + Power BI)
 
 ## Overview
+This project segments customers using the **RFM framework**:
+- **Recency**: days since last purchase  
+- **Frequency**: number of unique purchases (invoices)  
+- **Monetary**: total revenue contributed  
 
-This project segments customers using the RFM framework:
+It produces actionable customer groups (VIP/Champions, Loyal/Regular, New Customers, At-Risk, Lost) and a Power BI dashboard for quick business insight.
 
-- **Recency** (days since last purchase)
-- **Frequency** (number of invoices)
-- **Monetary** (total revenue)
-
-The pipeline is:
-
-1. Load and clean transactions in **PostgreSQL**
-2. Build RFM metrics + scores with **SQL window functions**
-3. Export results to CSV with **Python**
-4. Visualize segments in **Power BI**
+---
 
 ## Dataset
+**Online Retail (2010–2011)** transactional dataset.
 
-Online Retail transactions (2010–2011).
+Key fields used:
+- `CustomerID`, `InvoiceNo`, `InvoiceDate`
+- `Quantity`, `UnitPrice`
+- Revenue computed as: `Quantity × UnitPrice`
+
+---
+
+## Method
+### 1) Data Cleaning (SQL)
+Filtered out:
+- Cancellations (`InvoiceNo` starts with `C`)
+- Returns / negative rows (`Quantity <= 0`)
+- Invalid prices (`UnitPrice <= 0`)
+- Missing customers (`CustomerID IS NULL`)
+
+### 2) RFM Metrics (SQL)
+Per customer:
+- **Recency (days)** = days since last purchase  
+- **Frequency** = count of unique invoices  
+- **Monetary** = total revenue sum  
+
+### 3) RFM Scoring (SQL)
+Quintile scoring using window functions:
+- **Recency**: smaller is better → mapped to higher score (1–5)
+- **Frequency / Monetary**: larger is better (1–5)
+
+### 4) Segmentation (SQL)
+Rule-based segments:
+- **VIP / Champions**
+- **Loyal / Regular**
+- **New Customers**
+- **At-Risk**
+- **Lost**
+- **Other**
+
+### 5) Export for BI (Python)
+Exports Postgres tables into CSV for reporting:
+- `outputs/rfm_segments.csv` (customer-level)
+- `outputs/rfm_segment_summary.csv` (segment-level)
+
+---
+
+## Key Results (this run)
+- Customers segmented: **4,338**
+- Total revenue (dataset after cleaning): **8.91M**
+- Dashboard highlights revenue + customer distribution by segment.
+
+---
 
 ## Outputs
+- `outputs/rfm_segments.csv`
+- `outputs/rfm_segment_summary.csv`
 
-- `outputs/rfm_segment_summary.csv` — segment-level KPIs
-- `outputs/rfm_segments.csv` — customer-level RFM + segment labels (4338 customers)
+---
 
-## Power BI
+## Dashboard (Power BI)
+### Overview
+![Overview](powerbi/dashboard_screenshots/01_overview.png)
 
-Screenshots:
+### Customer Explorer
+![Customer Explorer](powerbi/dashboard_screenshots/02_customer_explorer.png)
 
-- `powerbi/dashboard_screenshots/01_overview.png`
-- `powerbi/dashboard_screenshots/02_customer_explorer.png`
+---
 
-## How to run
-
-### 1) Run SQL in Postgres
-
-Execute:
-
-- `sql/rfm.sql`
-
-### 2) Export CSVs
-
-Create `src/.env` locally (do not commit it):
+## Project Structure
