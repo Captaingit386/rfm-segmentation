@@ -1,6 +1,9 @@
-.venv/
+.env
 src/.env
+.venv/
 __pycache__/
+*.pyc
 .DS_Store
+.vscode/
 data/raw/
 outputs/rfm_segments.csv
