@@ -78,3 +78,17 @@ Exports Postgres tables into CSV for reporting:
 ---
 
 ## Project Structure
+rfm-segmentation/
+├─ src/
+│ ├─ export_rfm.py
+│ ├─ .env.example
+│ └─ .env (local only; not committed)
+├─ sql/
+│ └─ (optional: your SQL scripts if you add them)
+├─ outputs/
+│ ├─ rfm_segment_summary.csv
+│ └─ rfm_segments.csv (optional to commit if too large)
+└─ powerbi/
+└─ dashboard_screenshots/
+├─ 01_overview.png
+└─ 02_customer_explorer.png
