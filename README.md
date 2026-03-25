@@ -55,16 +55,22 @@ Exports Postgres tables into CSV for reporting:
 
 ---
 
-## Key Results (this run)
+## Key Results
 - Customers segmented: **4,338**
-- Total revenue (dataset after cleaning): **8.91M**
-- Dashboard highlights revenue + customer distribution by segment.
+- Total revenue (after cleaning): **£8.91M**
+- New Customers drive **48.8% of revenue** despite being only 14.9% of the base
+- **1,548 At-Risk customers** represent a £847K recovery opportunity
+- VIP / Champions (280 customers) show recent purchase behaviour — high retention priority
 
 ---
 
-## Outputs
-- `outputs/rfm_segments.csv`
-- `outputs/rfm_segment_summary.csv`
+## Business Insights
+| Segment | Action |
+|---|---|
+| New Customers | High avg spend (£6,744) — prioritise onboarding to convert to Loyal |
+| At-Risk | 1,548 customers — launch win-back email campaign with discount code |
+| VIP / Champions | Protect with loyalty rewards — any churn here is high revenue loss |
+| Lost | Small group (7) — low priority for re-engagement |
 
 ---
 
@@ -77,6 +83,12 @@ Exports Postgres tables into CSV for reporting:
 
 ---
 
+## Outputs
+- `outputs/rfm_segments.csv`
+- `outputs/rfm_segment_summary.csv`
+
+---
+
 ## Project Structure
 ```text
 rfm-segmentation/
@@ -85,11 +97,12 @@ rfm-segmentation/
 │  ├─ .env.example
 │  └─ .env (local only; not committed)
 ├─ sql/
-│  └─ (optional: your SQL scripts if you add them)
+│  └─ (your SQL scripts)
 ├─ outputs/
 │  ├─ rfm_segment_summary.csv
-│  └─ rfm_segments.csv (optional to commit if too large)
+│  └─ rfm_segments.csv
 └─ powerbi/
    └─ dashboard_screenshots/
       ├─ 01_overview.png
       └─ 02_customer_explorer.png
+```
